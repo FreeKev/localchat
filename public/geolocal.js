@@ -19,7 +19,7 @@ function geoFindMe() {
   var output = document.getElementById("out");
 
   if (!navigator.geolocation){
-    output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
+    output.innerHTML = "<p>Geolocation is not supported by your browser. Please Update.</p>";
     return;
   }
 
@@ -28,6 +28,18 @@ function geoFindMe() {
     var longitude = position.coords.longitude;
 
     output.innerHTML = '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
+
+    geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(latitude, longitude);
+    geocoder.geocode({'latLng': latlng}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        // alert("The user's zipcode is "+results[1].address_components.postal_code);
+        console.log(results);
+        alert("The user's zipcode is "+results["0"].address_components[7].long_name);
+      } else {
+        console.log('not working');
+      }
+    });
 
     // var img = new Image();
     // img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=13&size=300x300&sensor=false";
