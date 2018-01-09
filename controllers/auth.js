@@ -29,7 +29,8 @@ router.post('/signup', function(req, res, next){
       username: req.body.username,
       firstname: req.body.firstname,
       lastname: req.body.lastname,
-      password: req.body.password
+      password: req.body.password,
+      zipcode: req.body.zipcode
     }
   }).spread(function(user, wasCreated){
     if(wasCreated){

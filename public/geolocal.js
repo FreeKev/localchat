@@ -1,20 +1,5 @@
 // console.log('Yes, UP and running geolocal');
 
-// if(navigator.geolocation) {
-//     navigator.geolocation.getCurrentPosition(function(position) {
-//         var lat = position.coords.latitude;
-//         var long = position.coords.longitude;
-//         var point = new google.maps.LatLng(lat, long);
-//         new google.maps.Geocoder().geocode(
-//             {'latLng': point},
-//             function (res, status) {
-//                 var zip = res[0].formatted_address.match(/,\s\w{2}\s(\d{5})/);
-//                 $("#location").val(zip[1]);
-//             }
-//         );
-//     });
-// }
-
 function geoFindMe() {
   var output = document.getElementById("out");
 
@@ -28,15 +13,20 @@ function geoFindMe() {
     var longitude = position.coords.longitude;
 
     // output.innerHTML = '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
-    // output.innerHTML = '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
 
     geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(latitude, longitude);
     geocoder.geocode({'latLng': latlng}, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         console.log(results);
+        var zipcode = results["0"].address_components[7].long_name
+        var place = results["0"].address_components[2].long_name
+        var city = results["0"].address_components[3].long_name
         // alert("The user's zipcode is "+results["0"].address_components[7].long_name);
-        output.innerHTML = '<p>Zipcode Chat ' + results["0"].address_components[7].long_name + ': ' + results["0"].address_components[2].long_name + ', ' + results["0"].address_components[3].long_name + '</p>';
+        // output.innerHTML = '<p class="z">Zipcode Chat ' + results["0"].address_components[7].long_name + ': ' + results["0"].address_components[2].long_name + ', ' + results["0"].address_components[3].long_name + '</p>';
+        output.innerHTML = '<p class="z">Zipcode Chat ' + zipcode + ': ' + place + ', ' + city + '</p>' + '<input type="hidden" name="zipcode" value="' + zipcode + '">';
+        console.log(zipcode);
+        // output.innerHTML = '<input type="hidden" name="zipcode" value="' + zipcode + '">';
       } else {
         console.log('not working');
       }
