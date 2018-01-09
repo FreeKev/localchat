@@ -36,5 +36,6 @@ app.get('/profile', isLoggedIn, function(req, res){
 });
 
 app.use('/auth', require('./controllers/auth'));
+app.use('/chat', require('./controllers/chat'));
 
 app.listen(process.env.PORT || 3000);
