@@ -1,4 +1,4 @@
-console.log('Yes, UP and running geolocal');
+// console.log('Yes, UP and running geolocal');
 
 // if(navigator.geolocation) {
 //     navigator.geolocation.getCurrentPosition(function(position) {
@@ -29,10 +29,10 @@ function geoFindMe() {
 
     output.innerHTML = '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
 
-    var img = new Image();
-    img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=13&size=300x300&sensor=false";
-
-    output.appendChild(img);
+    // var img = new Image();
+    // img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=13&size=300x300&sensor=false";
+    //
+    // output.appendChild(img);
   }
 
   function error() {
@@ -43,3 +43,6 @@ function geoFindMe() {
 
   navigator.geolocation.getCurrentPosition(success, error);
 }
+
+// Long/Lat Get native Geolocation
+// navigator.geolocation.getCurrentPosition(function(position){console.log(position.coords.latitude, position.coords.longitude)});
