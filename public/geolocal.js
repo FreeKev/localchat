@@ -27,15 +27,16 @@ function geoFindMe() {
     var latitude  = position.coords.latitude;
     var longitude = position.coords.longitude;
 
-    output.innerHTML = '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
+    // output.innerHTML = '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
+    // output.innerHTML = '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
 
     geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(latitude, longitude);
     geocoder.geocode({'latLng': latlng}, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
-        // alert("The user's zipcode is "+results[1].address_components.postal_code);
         console.log(results);
-        alert("The user's zipcode is "+results["0"].address_components[7].long_name);
+        // alert("The user's zipcode is "+results["0"].address_components[7].long_name);
+        output.innerHTML = '<p>Zipcode Chat ' + results["0"].address_components[7].long_name + ': ' + results["0"].address_components[2].long_name + ', ' + results["0"].address_components[3].long_name + '</p>';
       } else {
         console.log('not working');
       }
