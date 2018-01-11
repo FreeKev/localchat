@@ -6,6 +6,7 @@ var flash = require('connect-flash');
 var isLoggedIn = require('./middleware/isLoggedIn');
 var passport = require('./config/passportConfig');
 var session = require('express-session');
+var db = require('./models');
 var app = express();
 var socket = require('socket.io');//require socket.io
 
@@ -29,21 +30,25 @@ io.sockets.on('connection', function (socket) { // We are given a websocket obje
   //   //## This is a way to send to everyone including sender
   //   // io.sockets.emit('message', "this goes to everyone");
   // });
+  // console.log(db.user.firstname);
+  // db.user.findOne
 
   socket.on('chat message', function(msg){
-  io.emit('chat message', msg);
+    io.emit('chat message', msg);
+    // io.emit('chat message', msg, zip);
+    //create a message in the message table
+    // db.messages.create({
+    //   userId: req.user.id,
+    //   messageText: msg,
+    //   zipcode: zip
+    // }).then()
   });
 
   socket.on('disconnect', function() {
     console.log("Client has disconnected");
   });
-});
 
-// io.on('connection', function(socket){
-//   socket.on('chat message', function(msg){
-//     io.emit('chat message', msg);
-//   });
-// });
+}); //ending
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -70,6 +75,7 @@ app.get('/', function(req, res){
 
 app.get('/profile', isLoggedIn, function(req, res){
   res.render('profile');
+  //Add DELETE ROUTE TO PROFILE
 });
 
 app.use('/auth', require('./controllers/auth'));

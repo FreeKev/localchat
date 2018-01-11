@@ -29,6 +29,11 @@ module.exports = (sequelize, DataTypes) => {
     facebookID: DataTypes.STRING,
     facebookToken: DataTypes.STRING,
     zipcode: DataTypes.INTEGER
+      // validate: {
+      //   type: DataTypes.STRING,
+      //   allowNull: false,
+      //   msg: 'Must allow browser to find location'
+      // }
   }, {
     hooks: {
       beforeCreate: function(pendingUser, options){

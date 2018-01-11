@@ -10,7 +10,7 @@ router.get('/login', function(req, res){
 });
 
 router.post('/login', passport.authenticate('local', {
-  successRedirect: '/',
+  successRedirect: '/profile',
   successFlash: 'Login Successful',
   failureRedirect: '/auth/login',
   failureFlash: 'Invalid Credentials'
@@ -67,7 +67,7 @@ router.get('/facebook', passport.authenticate('facebook', {
 
 //Handle response from FB (logic located in passport config)
 router.get('/callback/facebook', passport.authenticate('facebook', {
-  successRedirect: '/',
+  successRedirect: '/profile',
   successFlash: "You successfully logged in via Facebook",
   failureRedirect: '/auth/login',
   failureFlash: 'You tried to login with Facebook, but he doesn\'t recognize you'
