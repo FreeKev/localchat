@@ -30,6 +30,10 @@ io.sockets.on('connection', function (socket) { // We are given a websocket obje
   //   // io.sockets.emit('message', "this goes to everyone");
   // });
 
+  socket.on('chat message', function(msg){
+  io.emit('chat message', msg);
+  });
+
   socket.on('disconnect', function() {
     console.log("Client has disconnected");
   });
