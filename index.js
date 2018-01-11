@@ -35,6 +35,12 @@ io.sockets.on('connection', function (socket) { // We are given a websocket obje
   });
 });
 
+// io.on('connection', function(socket){
+//   socket.on('chat message', function(msg){
+//     io.emit('chat message', msg);
+//   });
+// });
+
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(ejsLayouts);
@@ -57,13 +63,6 @@ app.get('/', function(req, res){
   // res.send('home page coming soon');
   res.render('home');
 });
-
-io.on('connection', function(socket){
-  socket.on('chat message', function(msg){
-    io.emit('chat message', msg);
-  });
-});
-
 
 app.get('/profile', isLoggedIn, function(req, res){
   res.render('profile');
