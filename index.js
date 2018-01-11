@@ -19,19 +19,6 @@ var io = socket(server);
 
 io.sockets.on('connection', function (socket) { // We are given a websocket object in our function
   console.log("We have a new client: " + socket.id);
-  // When this user emits, client side: socket.emit('otherevent',some data);
-  //##this is the emit in the sketch that sends a message 'mouse'
-  // socket.on('mouse', function(data) {
-  //   // Data comes in as whatever was sent, including objects
-  //   console.log("Received: 'mouse' " + data.x + " " + data.y);
-  //   // Send it to all other clients
-  //   //##this sends all the data from the front end. The EXACT SAME DATA!!!!
-  //   socket.broadcast.emit('mouse', data);
-  //   //## This is a way to send to everyone including sender
-  //   // io.sockets.emit('message', "this goes to everyone");
-  // });
-  // console.log(db.user.firstname);
-  // db.user.findOne
 
   socket.on('chat message', function(msg){
     io.emit('chat message', msg);
@@ -71,11 +58,15 @@ app.use(function(req, res, next){
 app.get('/', function(req, res){
   // res.send('home page coming soon');
   res.render('home');
+
 });
 
 app.get('/profile', isLoggedIn, function(req, res){
   res.render('profile');
   //Add DELETE ROUTE TO PROFILE
+  db.user.findAll().then(printU => {
+    console.log(printU.zipcode);
+  });
 });
 
 app.use('/auth', require('./controllers/auth'));
