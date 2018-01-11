@@ -1,8 +1,11 @@
 <% if(!currentUser){ %>
       <h2>Login!</h2>
+    <% } else if (!currentUser.zipcode) { %>
+      <h2>Error: Zipcode Required for LocalChat</h2>
+      <h2>Re-Signup with geolocation turned-on</h2>
     <% } else { %>
 <h2>PROFILE</h2>
-      <h4><%=  currentUser.firstname %>, chatting locally @ <%=  currentUser.zipcode %></h4>
+      <h4><%=  currentUser.firstname %>, chatting locally in <%=  currentUser.zipcode %> chat!</h4>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.16/p5.js"></script>
       <script src="https://code.jquery.com/jquery-1.11.1.js"></script>

@@ -24,7 +24,7 @@ function geoFindMe() {
         var city = results["0"].address_components[3].long_name
         // alert("The user's zipcode is "+results["0"].address_components[7].long_name);
         // output.innerHTML = '<p class="z">Zipcode Chat ' + results["0"].address_components[7].long_name + ': ' + results["0"].address_components[2].long_name + ', ' + results["0"].address_components[3].long_name + '</p>';
-        output.innerHTML = '<p class="z">Zipcode Chat ' + zipcode + ': ' + place + ', ' + city + '</p>' + '<input type="hidden" name="zipcode" value="' + zipcode + '">';
+        output.innerHTML = '<p class="z">Zipcode Chat ' + zipcode + ': ' + place + ', ' + city + '</p>' + '<input type="hidden" name="zipcode" value="' + zipcode + '">' + '<input type="hidden" name="place" value="' + place + '">';
         console.log(zipcode);
         // output.innerHTML = '<input type="hidden" name="zipcode" value="' + zipcode + '">';
       } else {

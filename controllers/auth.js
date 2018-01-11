@@ -23,6 +23,22 @@ router.get('/signup', function(req, res){
 router.post('/signup', function(req, res, next){
   console.log('req.body is', req.body);
   // res.send('Signup post coming soon');
+  db.chatroom.findOrCreate({
+    where: { zipcode: req.body.zipcode },
+    defaults: {
+      chatname: req.body.place
+    }
+  }).spread(function(room, wasCreated){
+    if(wasCreated){
+      console.log('sucess room');
+    } else {
+      console.log('no room');
+    }
+  }).catch(function(err){
+    req.flash('error', err.message);
+    res.redirect('auth/signup');
+  })
+
   db.user.findOrCreate({
     where: { email: req.body.email },
     defaults: {
