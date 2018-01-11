@@ -29,7 +29,16 @@
         $(function () {
           var socket = io();
           $('form').submit(function(){
-            socket.emit('chat message', $('#m').val(), '<%= currentUser.zipcode %>');
+            // socket.emit('chat message', $('#m').val(), '<%= currentUser.zipcode %>');
+            // socket.emit('chat message', <%= currentUser.zipcode %>);
+            // socket.emit('chat message', <%= currentUser.id %>);
+            socket.emit('chat message', $('#m').val());
+            var message = {
+              id: <%= currentUser.id %>,
+              zip: <%= currentUser.zipcode %>,
+              text: $('#m').val()
+            };
+            socket.emit('package', message);
             $('#m').val('');
             return false;
           });
@@ -37,5 +46,14 @@
             $('#messages').append($('<li>').text(msg));
           });
         });
+      // $(function () {
+      //   var socket = io();
+      //   var message = {
+      //     id: <%= currentUser.id %>,
+      //     zip: <%= currentUser.zipcode %>,
+      //     text: $('#m').val()
+      //   };
+      //   socket.emit('package', message);
+      // });
       </script>
     <% } %>

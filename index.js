@@ -31,6 +31,10 @@ io.sockets.on('connection', function (socket) { // We are given a websocket obje
     // }).then()
   });
 
+  socket.on('package', function(message){
+    console.log(message);
+  })
+
   socket.on('disconnect', function() {
     console.log("Client has disconnected");
   });
