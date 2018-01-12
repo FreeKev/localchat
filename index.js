@@ -20,6 +20,8 @@ var io = socket(server);
 io.sockets.on('connection', function (socket) { // We are given a websocket object in our function
   console.log("We have a new client: " + socket.id);
 
+  // socket.join(room);
+
   socket.on('chat message', function(msg){
     io.emit('chat message', msg);
     // io.emit('chat message', msg, zip);
@@ -33,7 +35,18 @@ io.sockets.on('connection', function (socket) { // We are given a websocket obje
 
   socket.on('package', function(message){
     console.log(message);
-  })
+    socket.join(message.zip);
+    // We have a new client: wpmPX_L_ulGozp2YAAAD
+    // { id: 6, zip: 98101, text: 'asdf' }
+    db.messages.create({
+      userId: message.id,
+      zipcode: message.zip,
+      messageText: message.text
+    }).then(function(data){
+      // you can now access the newly created task via the variable data
+      console.log(data);
+    });
+  });
 
   socket.on('disconnect', function() {
     console.log("Client has disconnected");
