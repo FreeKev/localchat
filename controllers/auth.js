@@ -1,5 +1,6 @@
 var express = require('express');
 var passport = require('../config/passportConfig');
+var isLoggedIn = require('../middleware/isLoggedIn');
 var db = require('../models');
 var router = express.Router();
 
@@ -109,25 +110,33 @@ router.delete('/:id', function(req, res){
   }).then(function(deleted){
     console.log('deleted = ', deleted);
     res.send('successful'); //successFlash ??
+    req.flash('success', 'User Deleted');
   }).catch(function(err){
     console.log('Error occured', err);
     res.send('fail');
   })
 })
 
-// router.delete('/:id', function(req, res){
-//   console.log('Delete route. Id = ', req.params.id);
-//   // res.send('Delete Route Workin');
-//   db.article.destroy({
-//     where: { id: req.params.id }
-//   }).then(function(deleted){
-//     console.log('delete = ', deleted);
-//     res.send('successful');
-//   }).catch(function(err){
-//     console.log('Error occured', err);
-//     res.send('fail');
-//   })
-// });
+router.put('/edit', isLoggedIn, function(req, res){
+  console.log('Update Route. Id = ', req.user.id);
+  console.log(req.body);
+  db.user.update({
+      username: req.body.username,
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      zipcode: req.body.zipcode
+      }, {
+        where: {
+          id: req.user.id
+        }
+  }).then(function(user){
+    req.flash('success', 'User Updated');
+    res.send('success'); //needs to tell ajax it is done
+  }).catch(function(err){
+    console.log('Error occured', err);
+    res.send('fail');
+  });
+});
 
 
 module.exports = router;

@@ -6,26 +6,20 @@ $('#delete-user').click(function(e){
     url: $(this).attr('href'),
     method: 'DELETE'
   }).success(function(data){
-    window.location.href = '/';
+    window.location.href = '/auth/signup';
   });
 });
 
-// $('.delete-link').click(function(e){
-//   e.preventDefault();
-//   $.ajax({
-//     url: $(this).attr('href'),
-//     method: 'DELETE'
-//   }).success(function(data){
-//     window.location.href = '/articles';
-//   });
-// });
-//
-// $('#delete-tag').click(function(e){
-//   e.preventDefault();
-//   $.ajax({
-//     url: $(this).attr('href'),
-//     method: 'delete'
-//   }).success(function(response){
-//     window.location.href = '/tags';
-//   });
-// });
+$('#edit-form').submit(function(e){
+  console.log('edit form');
+  e.preventDefault();
+  $.ajax({
+    url: $(this).attr('action'),
+    method: 'PUT',
+    data: $(this).serialize()
+  }).success(function(data){
+    window.location.href = '/';
+  }).fail(function(err){
+    console.log(err);
+  });
+});
