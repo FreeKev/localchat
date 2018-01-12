@@ -10,7 +10,8 @@ var db = require('./models');
 var app = express();
 var socket = require('socket.io');//require socket.io
 
-app.use(express.static('public'));
+// app.use(express.static('public'));
+app.use(express.static(__dirname + '/public'));
 
 // server.listen(80);
 var server = app.listen(process.env.PORT || 3000);
@@ -45,7 +46,6 @@ io.sockets.on('connection', function (socket) { // We are given a websocket obje
 
   // socket.on('chat message', function(msg){
   //   // io.emit('chat message', msg);
-  //   // io.emit('chat message', msg, zip);
   // });
 
   socket.on('disconnect', function() {

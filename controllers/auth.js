@@ -3,7 +3,8 @@ var passport = require('../config/passportConfig');
 var db = require('../models');
 var router = express.Router();
 
-router.use(express.static('public'))
+// router.use(express.static(__dirname + '/static'));
+router.use(express.static(__dirname + '../public/'));
 
 router.get('/login', function(req, res){
   res.render('auth/login');
@@ -66,15 +67,6 @@ router.post('/signup', function(req, res, next){
   })
 });
 
-router.get('/logout', function(req, res){
-  // res.send('logout route coming soon');
-  req.logout();
-  req.flash('success', 'Successfully logged out');
-  res.redirect('/');
-
-
-});
-
 // OAUTH ROUTES
 //Calls the passport-facebook strategy (located in passport config)
 router.get('/facebook', passport.authenticate('facebook', {
@@ -88,5 +80,54 @@ router.get('/callback/facebook', passport.authenticate('facebook', {
   failureRedirect: '/auth/login',
   failureFlash: 'You tried to login with Facebook, but he doesn\'t recognize you'
 }));
+
+router.get('/logout', function(req, res){
+  // res.send('logout route coming soon');
+  req.logout();
+  req.flash('success', 'Successfully logged out');
+  res.redirect('/');
+});
+
+router.get('/:id', function(req, res){
+  // console.log('Get User route up');
+  // res.send('User edit route runnin');
+  db.user.findOne({
+    where: {id: req.params.id}
+    // NOT ASSOCIATED! REBOOT SERVER
+    // include: [db.chatroom, db.messages]
+  }).then(function(user){
+    // console.log(user);
+    res.render('auth/single', { result: user });
+  });
+});
+
+router.delete('/:id', function(req, res){
+  console.log('Delete route. Id = ', req.params.id);
+  res.send('Delete Route Working');
+  db.user.destroy({
+    where: {id: req.params.id}
+  }).then(function(deleted){
+    console.log('deleted = ', deleted);
+    res.send('successful'); //successFlash ??
+  }).catch(function(err){
+    console.log('Error occured', err);
+    res.send('fail');
+  })
+})
+
+// router.delete('/:id', function(req, res){
+//   console.log('Delete route. Id = ', req.params.id);
+//   // res.send('Delete Route Workin');
+//   db.article.destroy({
+//     where: { id: req.params.id }
+//   }).then(function(deleted){
+//     console.log('delete = ', deleted);
+//     res.send('successful');
+//   }).catch(function(err){
+//     console.log('Error occured', err);
+//     res.send('fail');
+//   })
+// });
+
 
 module.exports = router;
