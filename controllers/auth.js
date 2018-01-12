@@ -102,7 +102,9 @@ router.get('/:id', function(req, res){
   });
 });
 
-router.delete('/:id', function(req, res){
+//Add Controller for edit/delete? 
+
+router.delete('/:id', isLoggedIn, function(req, res){
   console.log('Delete route. Id = ', req.params.id);
   res.send('Delete Route Working');
   db.user.destroy({
