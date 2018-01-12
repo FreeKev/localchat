@@ -20,22 +20,16 @@ var io = socket(server);
 io.sockets.on('connection', function (socket) { // We are given a websocket object in our function
   console.log("We have a new client: " + socket.id);
 
-  // socket.join(room);
-
-  socket.on('chat message', function(msg){
-    io.emit('chat message', msg);
-    // io.emit('chat message', msg, zip);
-    //create a message in the message table
-    // db.messages.create({
-    //   userId: req.user.id,
-    //   messageText: msg,
-    //   zipcode: zip
-    // }).then()
+  socket.on('create', function(room) {
+    socket.join(room);
   });
+  // socket.on('chatroom', function(chat){
+  //   socket.join(chat);
+  // });
 
   socket.on('package', function(message){
+    // socket.join(message.zip);
     console.log(message);
-    socket.join(message.zip);
     // We have a new client: wpmPX_L_ulGozp2YAAAD
     // { id: 6, zip: 98101, text: 'asdf' }
     db.messages.create({
@@ -44,9 +38,15 @@ io.sockets.on('connection', function (socket) { // We are given a websocket obje
       messageText: message.text
     }).then(function(data){
       // you can now access the newly created task via the variable data
-      console.log(data);
+      // console.log(data);
+      io.sockets.in(message.zip).emit('chat message', message.text);
     });
   });
+
+  // socket.on('chat message', function(msg){
+  //   // io.emit('chat message', msg);
+  //   // io.emit('chat message', msg, zip);
+  // });
 
   socket.on('disconnect', function() {
     console.log("Client has disconnected");

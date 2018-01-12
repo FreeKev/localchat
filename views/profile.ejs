@@ -25,11 +25,12 @@
       <script>
         $(function () {
           var socket = io();
+          socket.emit('create', '<%= currentUser.zipcode %>');
           $('form').submit(function(){
             // socket.emit('chat message', $('#m').val(), '<%= currentUser.zipcode %>');
             // socket.emit('chat message', <%= currentUser.zipcode %>);
             // socket.emit('chat message', <%= currentUser.id %>);
-            socket.emit('chat message', $('#m').val());
+            // socket.emit('chat message', $('#m').val());
             var message = {
               id: <%= currentUser.id %>,
               zip: <%= currentUser.zipcode %>,
