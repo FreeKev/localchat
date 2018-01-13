@@ -5,18 +5,21 @@
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD80T0Aor1mRyBzNVkpEnlYzUy7oqzsLkM&callback=geoFindImg"></script>
   <style>
-    h2, h4 { text-align: center; }
+    h2, h4 { text-align: center;
+              color: white;
+              z-index: 1; }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font: 13px Helvetica, Arial;
           background-color: black; }
-    form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 85%; }
+    form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; left: 0; }
     form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-    form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+    form button { width: 9%; background: #31708f; border: none; padding: 10px; }
     /* Padding none & remove send sets black send button */
+    .message-box { position: relative;; width: 100%; overflow:auto; height: 400px; display: flex; flex-direction: column-reverse; }
     #messages { list-style-type: none; margin: 0; padding: 0; }
     #messages li { padding: 5px 10px; }
-    #messages li:nth-child(odd) { background: #eee; }
-    #messages li:nth-child(even) { background: black; color: white; }
+    #messages li:nth-child(odd) { background: rgba(0, 0, 0, 0.5); color: #31708f; }
+    #messages li:nth-child(even) { background: rgba(0, 0, 0, 0.2); color: white; }
     img {
     height: auto;
     left: 0;
@@ -27,14 +30,16 @@
     position: fixed;
     top: 0;
     width: 100%;
-    opacity: 0.5;
+    opacity: 0.4;
     filter: alpha(opacity=50); /* For IE8 and earlier */
     z-index: -1;
 }
    }
   </style>
   <div id="out"></div>
-  <ul id="messages"></ul>
+  <div class="message-box">
+    <ul id="messages"></ul>
+  </div>
   <form action="">
     <input id="m" autocomplete="off" /><button>Send</button>
   </form>
@@ -57,7 +62,7 @@
         return false;
       });
       socket.on('chat message', function(msg){
-        $('#messages').append($('<li>').text(msg));
+        $('#messages').append($('<li>').text('<%= currentUser.username %>' + ':  ' + msg));
       });
     });
   </script>
