@@ -1,6 +1,10 @@
 # LocalChat
 An online chat designed to connect with only those local to you.
 
+Hosted on:
+https://zipcode-chat.herokuapp.com/profile
+https://github.com/FreeKev/localchat
+
 ## Technologies Used
 * HTML
 * CSS
@@ -33,12 +37,15 @@ An online chat designed to connect with only those local to you.
 
 ## Issues
 * Socket.io
-  - Room documentation was difficult, but made it through
+  - Understanding Room & Namespaces
+* Chat scroll, solved with css flex column-reverse
 
 ## More?
 * Further CSS Beauty
-* User Bios and more extensive profiles? 
+* User Bio and more extensive profiles
 * Backdoor Admin Rights
 * Change proximity Scope
   - Not merely Zipcode, but areas
 * DM Requests?
+* Share files
+* Create community directory (for schools, et al)
