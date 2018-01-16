@@ -38,6 +38,12 @@ io.sockets.on('connection', function (socket) { // We are given a websocket obje
       // console.log(data);
       io.sockets.in(message.zip).emit('chat message', message.text);
     });
+
+    // console.log(io.sockets.adapter.rooms);
+    // returns
+  //   { '98020': Room { sockets: { '1rfOVtgXtC_pj734AAAA': true }, length: 1 },
+  // '1rfOVtgXtC_pj734AAAA': Room { sockets: { '1rfOVtgXtC_pj734AAAA': true }, length: 1 } }
+
   });
 
   socket.on('disconnect', function() {

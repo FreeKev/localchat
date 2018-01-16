@@ -1,8 +1,8 @@
 <h2>Chat History for <%=currentUser.zipcode%></h2>
-<h2><%= currentUser.firstname %></h2>
-<style> .dater { font-size: 12px; } h2 { text-align: center; } </style>
-<!-- tbody { display: flex;
-flex-direction: column-reverse; } -->
+  <style>
+    .dater { font-size: 12px; }
+    h2 { text-align: center; }
+  </style>
 <h1 class="text-center">Messages</h1>
 <% if(results.length <= 0){ %>
     <h2>Nothing in the database yet!</h2>
