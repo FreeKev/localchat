@@ -2,8 +2,8 @@
 An online chat designed to connect with only those local to you.
 
 Hosted on:
-https://zipcode-chat.herokuapp.com/profile
-https://github.com/FreeKev/localchat
+* https://zipcode-chat.herokuapp.com/profile
+* https://github.com/FreeKev/localchat
 
 ## Technologies Used
 * HTML
