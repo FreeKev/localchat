@@ -28,12 +28,17 @@ An online chat designed to connect with only those local to you.
 ### Chat Screen in Process
 ![Sprint 3](https://freekev.github.io/Cloud/assets/localchat/07.png)
 
+### Finishing Product
+![Chat Screen](https://freekev.github.io/Cloud/assets/localchat/chat.png)
+
 ## Issues
-* Socket.io Room documentation was difficult, but made it through
+* Socket.io
+  - Room documentation was difficult, but made it through
 
 ## More?
 * Further CSS Beauty
-* Database Associations will help History Page
+* User Bios and more extensive profiles? 
 * Backdoor Admin Rights
 * Change proximity Scope
   - Not merely Zipcode, but areas
+* DM Requests?
