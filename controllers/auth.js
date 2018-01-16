@@ -4,7 +4,6 @@ var isLoggedIn = require('../middleware/isLoggedIn');
 var db = require('../models');
 var router = express.Router();
 
-// router.use(express.static(__dirname + '/static'));
 router.use(express.static(__dirname + '../public/'));
 
 router.get('/login', function(req, res){
@@ -102,7 +101,7 @@ router.get('/:id', function(req, res){
   });
 });
 
-//Add Controller for edit/delete? 
+//Add Controller for edit/delete?
 
 router.delete('/:id', isLoggedIn, function(req, res){
   console.log('Delete route. Id = ', req.params.id);
@@ -139,6 +138,5 @@ router.put('/edit', isLoggedIn, function(req, res){
     res.send('fail');
   });
 });
-
 
 module.exports = router;

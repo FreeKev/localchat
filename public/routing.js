@@ -1,5 +1,3 @@
-console.log('Hi from routing.js');
-
 $('#delete-user').click(function(e){
   e.preventDefault();
   $.ajax({

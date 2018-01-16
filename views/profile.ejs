@@ -1,69 +1,35 @@
 <h2>ChatLocal</h2>
-  <h4><%=  currentUser.firstname %>, in <%=  currentUser.zipcode %> chat!</h4>
+  <h4><%=  currentUser.firstname %>, in <a href="/chat/history/<%=currentUser.zipcode%>"><%=  currentUser.zipcode %></a> chat!</h4>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.16/p5.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD80T0Aor1mRyBzNVkpEnlYzUy7oqzsLkM&callback=geoFindImg"></script>
-  <style>
-    h2, h4 { text-align: center;
-              text-shadow: 2px 2px #000000;
-              color: white;
-              z-index: 1; }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font: 13px Helvetica, Arial;
-          background-color: black; }
-    form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; left: 0; }
-    form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-    form button { width: 9.5%; height: inherit; background: #31708f; border: none; padding: 10px; font-size: 2vw; color: white; }
-    /* Padding none & remove send sets black send button */
-    .message-box { position: relative;; width: 100%; overflow:auto; height: 400px; display: flex; flex-direction: column-reverse; border: 4px solid black; }
-    #messages { list-style-type: none; margin: 0; padding: 0; }
-    #messages li { padding: 5px 10px; }
-    #messages li:nth-child(odd) { background: rgba(0, 0, 0, 0.5); color: #31708f; }
-    #messages li:nth-child(even) { background: rgba(0, 0, 0, 0.2); color: white; }
-    img {
-    height: auto;
-    left: 0;
-    margin: 0;
-    min-height: 100%;
-    min-width: 674px;
-    padding: 0;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    opacity: 0.4;
-    filter: alpha(opacity=50); /* For IE8 and earlier */
-    z-index: -1;
-}
-   }
-  </style>
+  <link rel="stylesheet" href="/css/prof.css">
   <div id="out"></div>
   <div class="message-box">
     <ul id="messages"></ul>
+  </div>
+  <div class="active-users">
   </div>
   <form action="">
     <input id="m" autocomplete="off" /><button>Send</button>
   </form>
   <script>
-    $(function () {
-      var socket = io();
-      socket.emit('create', '<%= currentUser.zipcode %>');
-      $('form').submit(function(){
-        // socket.emit('chat message', $('#m').val(), '<%= currentUser.zipcode %>');
-        // socket.emit('chat message', <%= currentUser.zipcode %>);
-        // socket.emit('chat message', <%= currentUser.id %>);
-        // socket.emit('chat message', $('#m').val());
-        var message = {
-          id: <%= currentUser.id %>,
-          zip: <%= currentUser.zipcode %>,
-          text: $('#m').val()
-        };
-        socket.emit('package', message);
-        $('#m').val('');
-        return false;
-      });
-      socket.on('chat message', function(msg){
-        $('#messages').append($('<li>').text('<%= currentUser.username %>' + ':  ' + msg));
-      });
+  $(function () {
+    var socket = io();
+    socket.emit('create', '<%= currentUser.zipcode %>');
+    $('form').submit(function(){
+      var message = {
+        id: <%= currentUser.id %>,
+        zip: <%= currentUser.zipcode %>,
+        text: $('#m').val()
+      };
+      socket.emit('package', message);
+      $('#m').val('');
+      return false;
     });
+    socket.on('chat message', function(msg){
+      $('#messages').append($('<li>').text('<%= currentUser.username %>' + ':  ' + msg));
+    });
+  });
   </script>

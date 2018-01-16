@@ -24,12 +24,8 @@ io.sockets.on('connection', function (socket) { // We are given a websocket obje
   socket.on('create', function(room) {
     socket.join(room);
   });
-  // socket.on('chatroom', function(chat){
-  //   socket.join(chat);
-  // });
 
   socket.on('package', function(message){
-    // socket.join(message.zip);
     console.log(message);
     // We have a new client: wpmPX_L_ulGozp2YAAAD
     // { id: 6, zip: 98101, text: 'asdf' }
@@ -44,14 +40,9 @@ io.sockets.on('connection', function (socket) { // We are given a websocket obje
     });
   });
 
-  // socket.on('chat message', function(msg){
-  //   // io.emit('chat message', msg);
-  // });
-
   socket.on('disconnect', function() {
     console.log("Client has disconnected");
   });
-
 }); //ending
 
 app.set('view engine', 'ejs');
@@ -73,18 +64,15 @@ app.use(function(req, res, next){
 })
 
 app.get('/', function(req, res){
-  // res.send('home page coming soon');
   res.render('home');
-
 });
 
 app.get('/profile', isLoggedIn, function(req, res){
   res.render('profile');
-  //Add DELETE ROUTE TO PROFILE
   db.user.findAll().then(printU => {
     console.log(printU.zipcode);
   });
 });
 
 app.use('/auth', require('./controllers/auth'));
-// app.use('/chat', require('./controllers/chat'));
+app.use('/chat', require('./controllers/chat'));
