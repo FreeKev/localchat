@@ -8,17 +8,15 @@ var passport = require('./config/passportConfig');
 var session = require('express-session');
 var db = require('./models');
 var app = express();
-var socket = require('socket.io');//require socket.io
+var socket = require('socket.io');
 
-// app.use(express.static('public'));
 app.use(express.static(__dirname + '/public'));
 
-// server.listen(80);
 var server = app.listen(process.env.PORT || 3000);
 
 var io = socket(server);
 
-io.sockets.on('connection', function (socket) { // We are given a websocket object in our function
+io.sockets.on('connection', function (socket) {
   console.log("We have a new client: " + socket.id);
 
   socket.on('create', function(room) {
@@ -27,34 +25,24 @@ io.sockets.on('connection', function (socket) { // We are given a websocket obje
 
   socket.on('package', function(message){
     console.log(message);
-    // We have a new client: wpmPX_L_ulGozp2YAAAD
-    // { id: 6, zip: 98101, text: 'asdf' }
     db.messages.create({
       userId: message.id,
       zipcode: message.zip,
       messageText: message.text
     }).then(function(data){
-      // you can now access the newly created task via the variable data
-      // console.log(data);
       io.sockets.in(message.zip).emit('chat message', message.text);
     });
-
-    // console.log(io.sockets.adapter.rooms);
-    // returns
-  //   { '98020': Room { sockets: { '1rfOVtgXtC_pj734AAAA': true }, length: 1 },
-  // '1rfOVtgXtC_pj734AAAA': Room { sockets: { '1rfOVtgXtC_pj734AAAA': true }, length: 1 } }
-
   });
 
   socket.on('disconnect', function() {
     console.log("Client has disconnected");
   });
-}); //ending
+
+});
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(ejsLayouts);
-// Session above flash & passport bcs they use it
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,

@@ -17,7 +17,7 @@
     <tbody>
     <% results.forEach(function(message){ %>
         <tr>
-          <th scope="row"><%= message.userId %></th>
+          <th scope="row"><%= message.user.username %></th>
           <td><%= message.messageText %></td>
           <td class="dater"><%= message.createdAt %></td>
         </tr>

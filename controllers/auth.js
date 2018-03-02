@@ -23,7 +23,6 @@ router.get('/signup', function(req, res){
 
 router.post('/signup', function(req, res, next){
   console.log('req.body is', req.body);
-  // res.send('Signup post coming soon');
   db.chatroom.findOrCreate({
     where: { zipcode: req.body.zipcode },
     defaults: {
@@ -51,13 +50,11 @@ router.post('/signup', function(req, res, next){
     }
   }).spread(function(user, wasCreated){
     if(wasCreated){
-      // Yay no duplic
       passport.authenticate('local', {
         successRedirect: '/profile',
         successFlash: 'Successfully logged in'
       })(req, res, next);
     } else {
-      //Bad job, tried sign up when need login
       req.flash('error', 'Email already exists');
       res.redirect('/auth/login');
     }
@@ -67,13 +64,10 @@ router.post('/signup', function(req, res, next){
   })
 });
 
-// OAUTH ROUTES
-//Calls the passport-facebook strategy (located in passport config)
 router.get('/facebook', passport.authenticate('facebook', {
   scope: ['public_profile', 'email']
 }));
 
-//Handle response from FB (logic located in passport config)
 router.get('/callback/facebook', passport.authenticate('facebook', {
   successRedirect: '/profile',
   successFlash: "You successfully logged in via Facebook",
@@ -82,26 +76,18 @@ router.get('/callback/facebook', passport.authenticate('facebook', {
 }));
 
 router.get('/logout', function(req, res){
-  // res.send('logout route coming soon');
   req.logout();
   req.flash('success', 'Successfully logged out');
   res.redirect('/');
 });
 
 router.get('/:id', function(req, res){
-  // console.log('Get User route up');
-  // res.send('User edit route runnin');
   db.user.findOne({
     where: {id: req.params.id}
-    // NOT ASSOCIATED! REBOOT SERVER
-    // include: [db.chatroom, db.messages]
   }).then(function(user){
-    // console.log(user);
     res.render('auth/single', { result: user });
   });
 });
-
-//Add Controller for edit/delete?
 
 router.delete('/:id', isLoggedIn, function(req, res){
   console.log('Delete route. Id = ', req.params.id);
@@ -132,7 +118,7 @@ router.put('/edit', isLoggedIn, function(req, res){
         }
   }).then(function(user){
     req.flash('success', 'User Updated');
-    res.send('success'); //needs to tell ajax it is done
+    res.send('success');
   }).catch(function(err){
     console.log('Error occured', err);
     res.send('fail');
